@@ -66,9 +66,25 @@ public class CartController {
         return cartRepository.save(cart);
     }
 
+    @DeleteMapping("/clear")
+    public void clearCart(@RequestParam("userId") Long userId) {
+        // Получаем все товары в корзине пользователя
+        List<Cart> userCartItems = cartRepository.findByUserId(userId);
+
+        // Удаляем все товары из корзины пользователя
+        for (Cart cartItem : userCartItems) {
+            cartRepository.delete(cartItem);
+        }
+
+        // Здесь можно также добавить логику, если нужно отправить уведомление или выполнить другие действия
+    }
+
+
+
     // Удалить товар из корзины
     @DeleteMapping("/{id}")
     public void removeCartItem(@PathVariable Long id) {
         cartRepository.deleteById(id);
     }
 }
+

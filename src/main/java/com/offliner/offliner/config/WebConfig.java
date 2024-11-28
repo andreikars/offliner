@@ -10,10 +10,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")  // Разрешаем все пути
-                .allowedOrigins("http://localhost:3000", "https://bumpy-ties-grow.loca.lt")  // Указываем фронтенд-адреса
-                .allowedMethods("GET", "POST", "DELETE", "PUT")  // Разрешаем нужные HTTP-методы
-                .allowedHeaders("*");  // Разрешаем все заголовки
+        registry.addMapping("/**")
+                .allowedOrigins("https://offliner-react.vercel.app", "http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.offliner.offliner.controller;
 
 import com.offliner.offliner.exception.UserNotFaundException;
+import com.offliner.offliner.exception.UserNotFaundUsernameException;
 import com.offliner.offliner.model.User;
 import com.offliner.offliner.repository.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,22 @@ public class UserController {
         return userRepos.findById(id)
                 .orElseThrow(()->new UserNotFaundException(id));
     }
+
+    @PutMapping("/user/profile")
+    public User updateUserProfile(@RequestBody User newUser, @RequestParam String username) {
+        return userRepos.findByUsername(username)
+                .map(user -> {
+                    // Обновляем только те поля, которые может редактировать сам пользователь
+                    user.setFirst_name(newUser.getFirst_name());
+                    user.setSecond_name(newUser.getSecond_name());
+                    user.setEmail(newUser.getEmail());
+                    user.setPhone(newUser.getPhone());
+                    // Роль пользователя не меняется (пользователь не может менять свою роль)
+                    return userRepos.save(user);
+                })
+                .orElseThrow(() -> new UserNotFaundUsernameException(username));
+    }
+
 
     @PutMapping("/user/{id}")
     User updateUser(@RequestBody User newUser, @PathVariable Long id){

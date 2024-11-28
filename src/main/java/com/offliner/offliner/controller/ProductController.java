@@ -97,21 +97,62 @@ public class ProductController {
     }
 
     // Обновление продукта
+// Обновление продукта с изображением
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Long id,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "price", required = false) Double price,
+            @RequestParam(value = "stock", required = false) Integer stock,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "categoryId", required = false) Long categoryId) throws IOException {
+
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-            product.setName(updatedProduct.getName());
-            product.setDescription(updatedProduct.getDescription());
-            product.setPrice(updatedProduct.getPrice());
-            product.setStock(updatedProduct.getStock());
-            product.setImageUrl(updatedProduct.getImageUrl());
+
+            // Обновляем данные продукта, если они были переданы
+            if (name != null) product.setName(name);
+            if (description != null) product.setDescription(description);
+            if (price != null) product.setPrice(price);
+            if (stock != null) product.setStock(stock);
+            if (categoryId != null) {
+                Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+                if (categoryOptional.isPresent()) {
+                    product.setCategory(categoryOptional.get());
+                } else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);  // Категория не найдена
+                }
+            }
+
+            // Обработка изображения, если оно было передано
+            if (image != null && !image.isEmpty()) {
+                // Убедимся, что папка для изображений существует
+                File uploadDir = new File(UPLOAD_DIR);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();  // Создаем папку, если её нет
+                }
+
+                // Сохранение изображения
+                String imageName = StringUtils.cleanPath(image.getOriginalFilename());
+                String imagePath = "product/" + imageName;  // Формируем полный путь для изображения
+                Path targetLocation = Path.of(UPLOAD_DIR, imageName);
+                Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+                // Обновляем путь к изображению
+                product.setImageUrl(imagePath);
+            }
+
+            // Сохранение обновленного продукта в базе данных
             Product savedProduct = productRepository.save(product);
             return ResponseEntity.ok(savedProduct);
+
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
+
 
     // Добавление нового продукта с изображением
     @PostMapping
