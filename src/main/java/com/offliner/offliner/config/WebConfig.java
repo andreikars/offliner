@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://offliner-react.vercel.app", "http://localhost:3000")
+                .allowedOrigins("https://offliner-react.vercel.app", "http://localhost:3000", "http://8.211.51.110", "http://8.211.51.110:80")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
