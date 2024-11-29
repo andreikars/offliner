@@ -6,7 +6,6 @@ COPY target/offliner-0.0.1-SNAPSHOT.jar /app/offliner.jar
 
 # Указываем рабочую директорию
 WORKDIR /app
-git init
 
 # Запускаем приложение
 ENTRYPOINT ["java", "-jar", "offliner.jar"]
