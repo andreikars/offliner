@@ -11,21 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://8.211.51.110:3000", "http://localhost:3000")
+                .allowedOrigins("http://8.211.51.110:3000", "http://localhost:3000", "http://8.211.51.110", "http://8.211.51.110:80")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600); // Установите максимальное время кэширования preflight запроса
-        registry.addMapping("/product")  // Обрабатываем POST-запросы на /product
-                .allowedOrigins("http://8.211.51.110:3000")
-                .allowedMethods("POST", "OPTIONS", "GET", "PUT")  // Только POST и OPTIONS методы
-                .allowedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600);  // Максимальное время кэширования preflight запроса
+                .allowCredentials(true);
     }
-
-
-
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -33,4 +23,3 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:public/"); // Указываем местоположение файлов
     }
 }
-
