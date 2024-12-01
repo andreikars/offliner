@@ -16,7 +16,14 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600); // Установите максимальное время кэширования preflight запроса
+        registry.addMapping("/product")  // Обрабатываем POST-запросы на /product
+                .allowedOrigins("http://8.211.51.110:3000")
+                .allowedMethods("POST", "OPTIONS", "GET", "PUT")  // Только POST и OPTIONS методы
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);  // Максимальное время кэширования preflight запроса
     }
+
 
 
 
