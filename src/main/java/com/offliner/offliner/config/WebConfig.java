@@ -11,10 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://offliner-react.vercel.app", "http://localhost:3000", "http://8.211.51.110", "http://8.211.51.110:80", "http://localhost")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedOrigins("http://8.211.51.110:3000", "http://8.211.51.110", "http://8.211.51.110:8080", "https://offliner-react.vercel.app")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(3600); // Установите максимальное время кэширования preflight запроса
     }
 
     @Override
