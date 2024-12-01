@@ -21,4 +21,5 @@ com\offliner\offliner\exception\UserNotFaundAdvice.class
 com\offliner\offliner\model\Order.class
 com\offliner\offliner\controller\UserController.class
 com\offliner\offliner\controller\CartController.class
+com\offliner\offliner\config\CorsController.class
 com\offliner\offliner\model\User.class
