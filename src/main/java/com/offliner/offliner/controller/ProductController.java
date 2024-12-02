@@ -38,8 +38,8 @@ public class ProductController {
         List<Product> products = productRepository.findAll();
         for (Product product : products) {
             // Формируем полный URL для изображения
-            String imageUrl = "/product/" + product.getImageUrl(); // Например: /product/iphone.jpg
-            product.setImageUrl(imageUrl); // Обновляем ссылку на изображение
+            String imageUrl = "/product/" + product.getImageUrl(); 
+            product.setImageUrl(imageUrl); 
         }
         return products;
     }
@@ -69,8 +69,8 @@ public class ProductController {
 
         // Обновляем ссылку на изображение для каждого товара
         for (Product product : products) {
-            String imageUrl = "/product/" + product.getImageUrl(); // Например: /product/iphone.jpg
-            product.setImageUrl(imageUrl); // Обновляем ссылку на изображение
+            String imageUrl = "/product/" + product.getImageUrl(); 
+            product.setImageUrl(imageUrl); 
         }
 
         return products;
@@ -165,7 +165,6 @@ public class ProductController {
             @RequestParam("categoryId") Long categoryId) throws IOException {
 
         try {
-            // Убедимся, что папка для изображений существует
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();  // Создаем папку, если её нет
@@ -191,8 +190,8 @@ public class ProductController {
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
-            product.setCategory(category);  // Присваиваем найденную категорию
-            product.setImageUrl(imagePath);  // Сохраняем путь к изображению в базе данных
+            product.setCategory(category);  
+            product.setImageUrl(imagePath);  
 
             // Сохранение продукта в базе данных
             productRepository.save(product);
@@ -201,7 +200,7 @@ public class ProductController {
 
         } catch (IOException e) {
             System.err.println("Error saving product image: " + e.getMessage());
-            throw e; // Перебросим исключение, чтобы обработать его дальше
+            throw e; 
         }
     }
 
