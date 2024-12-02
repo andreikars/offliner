@@ -76,7 +76,7 @@ public class CartController {
             cartRepository.delete(cartItem);
         }
 
-        // Здесь можно также добавить логику, если нужно отправить уведомление или выполнить другие действия
+       
     }
 
 
