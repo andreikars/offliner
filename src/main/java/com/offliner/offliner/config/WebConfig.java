@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/product/**") // Обрабатываем запросы, начинающиеся с /product
-                .addResourceLocations("file:public/"); // Указываем местоположение файлов
+        registry.addResourceHandler("/product/**") 
+                .addResourceLocations("file:public/"); 
     }
 }
