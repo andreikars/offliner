@@ -67,7 +67,7 @@ public class AuthController {
             response.put("message", "Login successful");
             response.put("role", user.getRole());
             response.put("username", user.getUsername());
-            response.put("userId", String.valueOf(user.getId())); // Исправлено на userId с маленькой буквы
+            response.put("userId", String.valueOf(user.getId())); 
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
